@@ -53,10 +53,18 @@
           <div class="col-lg-6">
             <div class="card p-4 mb-0">
               <div class="card-body text-center">
-                <h1>ShortLink-Pro</h1>
-                <p class="text-body-secondary">Enter a URL to shorten</p>
+                <h1>URL Shortener</h1>
+                <p class="text-body-secondary">Enter a long URL to shorten</p>
                 <div class="input-group mb-3">
                   <input class="form-control" type="text" placeholder="Paste your long URL here" id="long-url">
+                </div>
+                <div class="input-group mb-3">
+                  <input class="form-control" type="text" placeholder="Enter an alias (optional)" id="alias">
+                </div>
+                <div class="input-group mb-3">
+                  <input class="form-control" type="date" placeholder="Select a date" id="date">
+                </div>
+                <div class="d-flex justify-content-center">
                   <button class="btn btn-primary" type="button" id="shorten-btn">Shorten URL</button>
                 </div>
                 <div id="short-url-container" class="mt-3 d-none">
@@ -75,10 +83,18 @@
     <script>
       document.getElementById('shorten-btn').addEventListener('click', () => {
         const longUrl = document.getElementById('long-url').value;
+        const alias = document.getElementById('alias').value;
+        const date = document.getElementById('date').value;
+
         if (longUrl) {
-          // Dummy shortened URL for demonstration purposes
-          const shortUrl = 'https://short.url/' + btoa(longUrl).substring(0, 8);
-          document.getElementById('short-url').value = shortUrl;
+          let shortUrl;
+          if (alias) {
+            shortUrl = 'https://short.url/' + alias;
+          } else {
+            shortUrl = 'https://short.url/' + btoa(longUrl).substring(0, 8);
+          }
+
+          document.getElementById('short-url').value = shortUrl + (date ? `?date=${date}` : '');
           document.getElementById('short-url-container').classList.remove('d-none');
         }
       });
